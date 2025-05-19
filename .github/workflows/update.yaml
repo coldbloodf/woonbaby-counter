@@ -1,0 +1,24 @@
+name: Update counter
+
+on:
+  push:
+    paths:
+      - trigger.png
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Update counter
+        run: |
+          count=$(curl -s https://api.countapi.xyz/hit/woonbaby-notion/mainpage | jq '.value')
+          echo "views: $count" > hits.json
+      - name: Commit
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add hits.json
+          git commit -m "Update counter"
+          git push
