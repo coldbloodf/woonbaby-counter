@@ -1,9 +1,8 @@
 name: Update counter
 
 on:
-  push:
-    paths:
-      - trigger.png
+  schedule:
+    - cron: '*/1 * * * *'  # 每分鐘執行一次
 
 jobs:
   update:
@@ -14,7 +13,7 @@ jobs:
       - name: Update counter
         run: |
           count=$(curl -s https://api.countapi.xyz/hit/woonbaby-notion/mainpage | jq '.value')
-          echo "views: $count" > hits.json
+          echo "{\"views\": $count}" > hits.json
       - name: Commit
         run: |
           git config user.name "GitHub Actions"
