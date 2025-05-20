@@ -1,29 +1,30 @@
 name: Update counter
 
 on:
-  push:
-    paths:
-      - trigger.png
+  schedule:
+    - cron: '*/1 * * * *'  # 每分鐘執行一次
+  workflow_dispatch:
 
 jobs:
   update:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
+      - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Read and increment view count
+      - name: Download trigger image
         run: |
-          count=$(jq '.views' hits.json)
-          echo "👉 原本的 count：$count"
-          new_count=$((count + 1))
-          echo "{\"views\": $new_count}" > hits.json
-          echo "$new_count" > count.txt
+          curl -s -o /dev/null https://raw.githubusercontent.com/你的帳號/你的repo/main/trigger.png
 
-      - name: Commit and push
+      - name: Update local counter
+        run: |
+          count=$(cat count.txt)
+          echo $((count + 1)) > count.txt
+
+      - name: Commit
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
-          git add hits.json count.txt
-          git commit -m "Update view count"
+          git add count.txt
+          git commit -m "Update counter"
           git push
