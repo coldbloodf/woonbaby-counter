@@ -11,10 +11,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
       - name: Update counter
         run: |
           count=$(curl -s https://api.countapi.xyz/hit/woonbaby-notion/mainpage | jq '.value')
+          echo "👉 抓到的 count 是：$count"
           echo "{\"views\": $count}" > hits.json
+
       - name: Commit
         run: |
           git config user.name "GitHub Actions"
