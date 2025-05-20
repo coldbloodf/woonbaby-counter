@@ -1,44 +1,50 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Woonbaby Counter</title>
-    <style>
-      body {
-        margin: 0;
-        padding: 0;
-        background-color: #fff0f5; /* 淡粉色背景 */
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-        font-family: "Segoe UI", sans-serif;
-      }
-      .counter {
-        padding: 10px 20px;
-        border-radius: 12px;
-        background-color: #ffe0ec;
-        color: #6e0032;
-        font-size: 24px;
-        font-weight: bold;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-        border: 2px dashed #ff91aa;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="counter">
-      🧸Woonbaby🐾：
-      <script>
-        fetch("https://coldbloodf.github.io/woonbaby-counter/count.txt")
-          .then(response => response.text())
-          .then(text => {
-            document.querySelector('.counter').innerHTML += text.trim()
-          })
-          .catch(err => {
-            document.querySelector('.counter').innerHTML += "N/A"
-          })
-      </script>
-    </div>
-  </body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Woonbaby Counter</title>
+  <style>
+    body {
+      background-color: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .counter {
+      padding: 20px 40px;
+      border: 2px dashed #06495B;
+      border-radius: 12px;
+      background-color: rgba(255, 255, 255, 0.3);
+      color: #93C4D4;
+      font-size: 20px;
+      font-weight: bold;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="counter">
+    🧸Woonbaby🐾：<span id="count">...</span>
+  </div>
+
+  <script>
+    fetch('count.txt')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('count').textContent = data.trim()
+      })
+      .catch(() => {
+        document.getElementById('count').textContent = 'Error'
+      })
+  </script>
+</body>
 </html>
