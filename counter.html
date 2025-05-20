@@ -1,27 +1,44 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8">
+    <title>Woonbaby Counter</title>
     <style>
       body {
-        font-family: sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #fff0f5; /* 淡粉色背景 */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        font-family: "Segoe UI", sans-serif;
+      }
+      .counter {
+        padding: 10px 20px;
+        border-radius: 12px;
+        background-color: #ffe0ec;
+        color: #6e0032;
         font-size: 24px;
-        color: #333;
-        text-align: center;
-        margin-top: 40px;
+        font-weight: bold;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        border: 2px dashed #ff91aa;
       }
     </style>
   </head>
   <body>
-    🧸Woonbaby🐾：
-    <span id="count">Loading...</span>
-
-    <script>
-      fetch('count.txt')
-        .then(res => res.text())
-        .then(num => {
-          document.getElementById('count').textContent = num
-        })
-    </script>
+    <div class="counter">
+      🧸Woonbaby🐾：
+      <script>
+        fetch("https://coldbloodf.github.io/woonbaby-counter/count.txt")
+          .then(response => response.text())
+          .then(text => {
+            document.querySelector('.counter').innerHTML += text.trim()
+          })
+          .catch(err => {
+            document.querySelector('.counter').innerHTML += "N/A"
+          })
+      </script>
+    </div>
   </body>
 </html>
