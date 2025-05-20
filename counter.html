@@ -2,48 +2,48 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Woonbaby Counter</title>
   <style>
     body {
-      background-color: transparent;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
       margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 4px;
+      background-color: transparent;
+      font-family: 'Arial', sans-serif;
     }
 
-    .counter {
-      padding: 20px 40px;
+    .counter-box {
+      display: inline-block;
+      padding: 6px 12px;
       border: 2px dashed #06495B;
-      border-radius: 12px;
-      background-color: rgba(255, 255, 255, 0.3);
+      border-radius: 8px;
+      background-color: rgba(255, 255, 255, 0.6);
       color: #93C4D4;
-      font-size: 20px;
+      font-size: 16px;
       font-weight: bold;
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-      display: flex;
-      align-items: center;
-      gap: 12px;
+      text-align: center;
+    }
+
+    .emoji {
+      font-size: 18px;
+      margin-right: 4px;
     }
   </style>
 </head>
 <body>
-  <div class="counter">
-    🧸Woonbaby🐾：<span id="count">...</span>
+  <div class="counter-box">
+    <span class="emoji">🧸Woonbaby🐾：</span>
+    <span id="count">-</span>
   </div>
 
   <script>
     fetch('count.txt')
-      .then(response => response.text())
-      .then(data => {
-        document.getElementById('count').textContent = data.trim()
+      .then(res => res.text())
+      .then(count => {
+        document.getElementById('count').textContent = count
       })
       .catch(() => {
-        document.getElementById('count').textContent = 'Error'
+        document.getElementById('count').textContent = 'err'
       })
   </script>
 </body>
