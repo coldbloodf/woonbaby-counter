@@ -1,27 +1,29 @@
 name: Update counter
 
 on:
-  schedule:
-    - cron: '*/1 * * * *'  # 每分鐘執行一次
-  workflow_dispatch:
+  push:
+    paths:
+      - trigger.png
 
 jobs:
   update:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Update counter
+      - name: Read and increment view count
         run: |
-          count=$(curl -s https://api.countapi.xyz/hit/woonbaby-notion/mainpage | jq '.value')
-          echo "👉 抓到的 count 是：$count"
-          echo "{\"views\": $count}" > hits.json
+          count=$(jq '.views' hits.json)
+          echo "👉 原本的 count：$count"
+          new_count=$((count + 1))
+          echo "{\"views\": $new_count}" > hits.json
+          echo "$new_count" > count.txt
 
-      - name: Commit
+      - name: Commit and push
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
-          git add hits.json
-          git commit -m "Update counter"
+          git add hits.json count.txt
+          git commit -m "Update view count"
           git push
