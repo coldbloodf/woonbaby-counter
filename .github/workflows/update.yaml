@@ -3,6 +3,7 @@ name: Update counter
 on:
   schedule:
     - cron: '*/1 * * * *'  # 每分鐘執行一次
+  workflow_dispatch:
 
 jobs:
   update:
